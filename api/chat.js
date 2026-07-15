@@ -1,6 +1,6 @@
-// Fonction serverless hébergée par Vercel.
+// Fonction serverless Vercel (format CommonJS, compatible sans configuration).
 // La clé Gemini n'est JAMAIS dans la page : elle est lue ici, côté serveur,
-// depuis la variable d'environnement GEMINI_API_KEY (saisie dans le tableau de bord Vercel).
+// depuis la variable d'environnement GEMINI_API_KEY (tableau de bord Vercel).
 
 const GEMINI_MODEL = "gemini-2.5-flash";
 
@@ -33,12 +33,30 @@ Règles de comportement :
 - Ne communique jamais de coordonnées privées (téléphone, adresse, courriel personnel).
 `.trim();
 
-export default async function handler(req, res) {
+module.exports = async function handler(req, res) {
+  // Vérification de santé : ouvrir l'adresse /api/chat dans un navigateur.
+  // Indique si la fonction est déployée et si la clé est bien configurée
+  // (sans jamais révéler la clé elle-même).
+  if (req.method === "GET") {
+    return res.status(200).json({
+      status: "ok",
+      modele: GEMINI_MODEL,
+      cleConfiguree: Boolean(process.env.GEMINI_API_KEY),
+    });
+  }
+
   if (req.method !== "POST") {
     return res.status(405).json({ error: "Méthode non autorisée." });
   }
 
   try {
+    if (!process.env.GEMINI_API_KEY) {
+      return res.status(500).json({
+        error: "Clé absente",
+        detail: "La variable GEMINI_API_KEY n'est pas configurée sur Vercel.",
+      });
+    }
+
     const body = typeof req.body === "string" ? JSON.parse(req.body) : (req.body || {});
     const messages = Array.isArray(body.messages) ? body.messages.slice(-12) : [];
 
@@ -72,7 +90,12 @@ export default async function handler(req, res) {
     );
 
     if (!upstream.ok) {
-      return res.status(502).json({ error: "Service momentanément indisponible." });
+      const errText = await upstream.text().catch(() => "");
+      console.error("Erreur Gemini", upstream.status, errText);
+      return res.status(502).json({
+        error: "Erreur API Gemini",
+        detail: "HTTP " + upstream.status + " " + errText.slice(0, 180),
+      });
     }
 
     const data = await upstream.json();
@@ -85,6 +108,10 @@ export default async function handler(req, res) {
     // Aucune journalisation du contenu échangé (minimisation RGPD).
     return res.status(200).json({ reply });
   } catch (e) {
-    return res.status(502).json({ error: "Service momentanément indisponible." });
+    console.error("Exception fonction", e);
+    return res.status(502).json({
+      error: "Exception serveur",
+      detail: String((e && e.message) || e).slice(0, 180),
+    });
   }
-}
+};

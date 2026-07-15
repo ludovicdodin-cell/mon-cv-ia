@@ -814,12 +814,19 @@
           });
           var data = await res.json();
           typing.remove();
-          var reply = (data && data.reply) ? data.reply : "Le service est momentanément indisponible.";
+          var reply;
+          if (data && data.reply) {
+            reply = data.reply;
+          } else if (data && data.error) {
+            reply = "[Diagnostic] " + data.error + (data.detail ? " — " + data.detail : "");
+          } else {
+            reply = "Le service est momentanément indisponible.";
+          }
           bubble(reply, "bot");
           history.push({ role: "assistant", content: reply });
         } catch (e) {
           typing.remove();
-          bubble("Le service est momentanément indisponible. Vous pouvez me contacter via LinkedIn.", "bot");
+          bubble("[Diagnostic] Appel impossible : " + ((e && e.message) ? e.message : "réponse illisible"), "bot");
         } finally {
           send.disabled = false;
           input.focus();
