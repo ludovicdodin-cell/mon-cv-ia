@@ -1,0 +1,24 @@
+<svg viewBox="0 0 480 128" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Ludovic Dodin — Direction SI, Cybersécurité, Conformité">
+  <rect x="0" y="0" width="480" height="128" rx="16" fill="#0C1826" />
+
+  <!-- Marque -->
+  <g transform="translate(34,24) scale(0.8)">
+    <path d="M55.56,10.4 A40,40 0 1 1 44.44,10.4"
+          fill="none" stroke="#B98A34" stroke-width="4" stroke-linecap="round" />
+    <g transform="translate(-2,0)" fill="none" stroke="#B98A34" stroke-width="6"
+       stroke-linecap="round" stroke-linejoin="round">
+      <path d="M36,33 L36,67 L49,67" />
+      <path d="M55,33 L55,67 M55,33 C74,33 74,67 55,67" />
+    </g>
+  </g>
+
+  <!-- Nom -->
+  <text x="150" y="60"
+        font-family="'Space Grotesk', 'Segoe UI', system-ui, sans-serif"
+        font-size="30" font-weight="700" letter-spacing="0.5" fill="#FFFFFF">Ludovic Dodin</text>
+
+  <!-- Accroche -->
+  <text x="150" y="86"
+        font-family="'IBM Plex Mono', ui-monospace, monospace"
+        font-size="13" letter-spacing="1.5" fill="#B98A34">DIRECTION SI · CYBERSÉCURITÉ · CONFORMITÉ</text>
+</svg>

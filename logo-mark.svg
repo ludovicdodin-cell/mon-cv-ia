@@ -1,0 +1,11 @@
+<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Monogramme LD">
+  <!-- Sceau ouvert -->
+  <path d="M55.56,10.4 A40,40 0 1 1 44.44,10.4"
+        fill="none" stroke="#B98A34" stroke-width="4" stroke-linecap="round" />
+  <!-- Monogramme LD -->
+  <g transform="translate(-2,0)" fill="none" stroke="#B98A34" stroke-width="6"
+     stroke-linecap="round" stroke-linejoin="round">
+    <path d="M36,33 L36,67 L49,67" />
+    <path d="M55,33 L55,67 M55,33 C74,33 74,67 55,67" />
+  </g>
+</svg>

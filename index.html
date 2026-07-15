@@ -1,0 +1,840 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Ludovic Dodin — Directeur des Systèmes d'Information</title>
+<link rel="icon" type="image/svg+xml" href="favicon.svg" />
+<meta name="description" content="CV augmenté de Ludovic Dodin, Directeur des Systèmes d'Information, expert cybersécurité et conformité : SMSI ISO 27001, RGPD, gouvernance de l'IA, transformation digitale." />
+
+<!-- Contact optionnel : si vous souhaitez exposer une adresse professionnelle,
+     décommentez le bouton « courriel » dans la section Contact et renseignez
+     une adresse dédiée. Il est déconseillé de publier une messagerie personnelle. -->
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" />
+
+<style>
+  :root {
+    --ink: #0C1826;
+    --ink-2: #13263A;
+    --ink-line: rgba(255,255,255,0.08);
+    --paper: #EEF1F0;
+    --card: #FFFFFF;
+    --slate: #16232E;
+    --muted: #5A6B78;
+    --line: #D6DCD9;
+    --brass: #B98A34;
+    --brass-deep: #9A7127;
+    --brass-soft: rgba(185,138,52,0.12);
+    --online: #3FB27F;
+    --display: "Space Grotesk", system-ui, sans-serif;
+    --body: "Inter", system-ui, sans-serif;
+    --mono: "IBM Plex Mono", ui-monospace, monospace;
+    --maxw: 1080px;
+  }
+
+  * { box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    margin: 0;
+    background: var(--paper);
+    color: var(--slate);
+    font-family: var(--body);
+    font-size: 17px;
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  a { color: inherit; }
+
+  .wrap {
+    max-width: var(--maxw);
+    margin: 0 auto;
+    padding: 0 28px;
+  }
+
+  .eyebrow {
+    font-family: var(--mono);
+    font-size: 12px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--brass);
+    margin: 0 0 18px;
+  }
+
+  h2.section-title {
+    font-family: var(--display);
+    font-weight: 600;
+    font-size: clamp(26px, 3.4vw, 38px);
+    line-height: 1.1;
+    letter-spacing: -0.01em;
+    margin: 0 0 34px;
+    color: var(--slate);
+  }
+
+  /* ---------- HERO ---------- */
+  .hero {
+    background: var(--ink);
+    color: #E8EDF1;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(900px 420px at 82% -8%, rgba(185,138,52,0.16), transparent 60%),
+      linear-gradient(180deg, rgba(255,255,255,0.03), transparent 40%);
+    pointer-events: none;
+  }
+  .console {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 14px 0;
+    border-bottom: 1px solid var(--ink-line);
+    font-family: var(--mono);
+    font-size: 13px;
+    color: #8FA2B2;
+    position: relative;
+    z-index: 1;
+  }
+  .dots { display: inline-flex; gap: 7px; }
+  .dots i {
+    width: 11px; height: 11px; border-radius: 50%;
+    background: #2C4054; display: inline-block;
+  }
+  .dots i:first-child { background: #C6913E; }
+  .console .path { color: #B7C4CF; }
+  .status-pill {
+    margin-left: auto;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    color: #CFE7DB;
+    font-size: 12px;
+    letter-spacing: 0.04em;
+  }
+  .status-pill .led {
+    width: 9px; height: 9px; border-radius: 50%;
+    background: var(--online);
+    box-shadow: 0 0 0 0 rgba(63,178,127,0.6);
+    animation: pulse 2.6s infinite;
+  }
+  @keyframes pulse {
+    0% { box-shadow: 0 0 0 0 rgba(63,178,127,0.55); }
+    70% { box-shadow: 0 0 0 9px rgba(63,178,127,0); }
+    100% { box-shadow: 0 0 0 0 rgba(63,178,127,0); }
+  }
+
+  .hero-body {
+    position: relative;
+    z-index: 1;
+    padding: 74px 0 86px;
+  }
+  .hero-role {
+    font-family: var(--mono);
+    font-size: 13px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--brass);
+    margin: 0 0 20px;
+  }
+  .hero-name {
+    font-family: var(--display);
+    font-weight: 700;
+    font-size: clamp(46px, 8vw, 92px);
+    line-height: 0.98;
+    letter-spacing: -0.02em;
+    margin: 0;
+    color: #FFFFFF;
+  }
+  .hero-thesis {
+    max-width: 640px;
+    font-size: clamp(18px, 2.1vw, 22px);
+    line-height: 1.45;
+    color: #B9C6D1;
+    margin: 26px 0 0;
+  }
+  .hero-thesis b { color: #F2E6CE; font-weight: 600; }
+
+  .tokens {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 40px;
+  }
+  .token {
+    font-family: var(--mono);
+    font-size: 12.5px;
+    letter-spacing: 0.02em;
+    padding: 9px 14px;
+    border: 1px solid var(--ink-line);
+    border-radius: 3px;
+    background: rgba(255,255,255,0.03);
+    color: #C9D5DE;
+  }
+  .token b { color: var(--brass); font-weight: 500; }
+
+  /* ---------- SECTIONS ---------- */
+  section { padding: 84px 0; }
+  section.tight { padding: 72px 0; }
+
+  .profil p {
+    max-width: 760px;
+    font-size: clamp(18px, 1.9vw, 21px);
+    line-height: 1.7;
+    color: #26343F;
+    margin: 0;
+  }
+  .profil p .accent { color: var(--brass-deep); font-weight: 600; }
+
+  /* Expertises */
+  .cards {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+  }
+  .card {
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: 6px;
+    padding: 30px 26px 32px;
+    position: relative;
+  }
+  .card .idx {
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--brass);
+    letter-spacing: 0.1em;
+  }
+  .card h3 {
+    font-family: var(--display);
+    font-weight: 600;
+    font-size: 20px;
+    line-height: 1.25;
+    margin: 14px 0 14px;
+    color: var(--slate);
+  }
+  .card ul { margin: 0; padding: 0; list-style: none; }
+  .card li {
+    position: relative;
+    padding-left: 18px;
+    margin-bottom: 11px;
+    font-size: 15.5px;
+    line-height: 1.55;
+    color: #3B4A55;
+  }
+  .card li::before {
+    content: "";
+    position: absolute;
+    left: 0; top: 9px;
+    width: 6px; height: 6px;
+    background: var(--brass);
+    border-radius: 1px;
+  }
+  .card .gain {
+    margin-top: 16px;
+    display: inline-block;
+    font-family: var(--mono);
+    font-size: 12.5px;
+    color: var(--brass-deep);
+    background: var(--brass-soft);
+    padding: 6px 10px;
+    border-radius: 3px;
+  }
+
+  /* Domaines — console panel (signature repeated) */
+  .matrix-wrap { background: var(--ink); border-radius: 8px; overflow: hidden; }
+  .matrix-head {
+    display: flex; align-items: center; gap: 12px;
+    padding: 15px 26px;
+    border-bottom: 1px solid var(--ink-line);
+    font-family: var(--mono);
+    font-size: 13px;
+    color: #8FA2B2;
+  }
+  .matrix-head .dots i { width: 10px; height: 10px; }
+  .matrix {
+    padding: 8px 26px 22px;
+  }
+  .mrow {
+    display: grid;
+    grid-template-columns: 220px 1fr;
+    gap: 18px;
+    padding: 18px 0;
+    border-bottom: 1px solid var(--ink-line);
+  }
+  .mrow:last-child { border-bottom: none; }
+  .mrow .key {
+    font-family: var(--mono);
+    font-size: 13px;
+    letter-spacing: 0.02em;
+    color: var(--brass);
+    padding-top: 3px;
+  }
+  .mrow .val {
+    display: flex; flex-wrap: wrap; gap: 8px;
+  }
+  .chip {
+    font-size: 14px;
+    color: #D4DEE6;
+    background: rgba(255,255,255,0.05);
+    border: 1px solid var(--ink-line);
+    padding: 6px 11px;
+    border-radius: 3px;
+  }
+
+  /* Timeline */
+  .timeline { position: relative; margin: 0; padding: 0; list-style: none; max-width: 760px; }
+  .timeline::before {
+    content: "";
+    position: absolute;
+    left: 92px; top: 6px; bottom: 6px;
+    width: 1px;
+    background: var(--line);
+  }
+  .tl {
+    position: relative;
+    display: grid;
+    grid-template-columns: 92px 1fr;
+    gap: 30px;
+    padding: 14px 0;
+  }
+  .tl .yr {
+    font-family: var(--mono);
+    font-size: 14px;
+    color: var(--brass-deep);
+    text-align: right;
+    padding-top: 1px;
+  }
+  .tl .txt { position: relative; }
+  .tl .txt::before {
+    content: "";
+    position: absolute;
+    left: -34px; top: 7px;
+    width: 11px; height: 11px;
+    border-radius: 50%;
+    background: var(--paper);
+    border: 2px solid var(--brass);
+  }
+  .tl .txt strong { font-weight: 600; color: var(--slate); }
+  .tl .txt span { color: var(--muted); font-size: 15px; }
+
+  /* Engagements */
+  .engage {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+    max-width: 900px;
+  }
+  .eng {
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-left: 3px solid var(--brass);
+    border-radius: 5px;
+    padding: 20px 22px;
+  }
+  .eng h4 {
+    font-family: var(--display);
+    font-weight: 600;
+    font-size: 17px;
+    margin: 0 0 6px;
+    color: var(--slate);
+  }
+  .eng p { margin: 0; font-size: 15px; color: #45535E; line-height: 1.5; }
+
+  /* Contact */
+  .contact { background: var(--ink); color: #E8EDF1; }
+  .contact .eyebrow { color: var(--brass); }
+  .contact h2 { color: #FFFFFF; }
+  .contact p {
+    max-width: 620px;
+    color: #B9C6D1;
+    font-size: clamp(17px, 1.9vw, 20px);
+    line-height: 1.6;
+    margin: 0 0 34px;
+  }
+  .btn-row { display: flex; flex-wrap: wrap; gap: 14px; }
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    text-decoration: none;
+    font-family: var(--display);
+    font-weight: 600;
+    font-size: 16px;
+    padding: 15px 26px;
+    border-radius: 5px;
+    transition: transform .18s ease, background .18s ease;
+  }
+  .btn-primary { background: var(--brass); color: #14202B; }
+  .btn-primary:hover { background: #C99A44; transform: translateY(-2px); }
+  .btn-ghost { border: 1px solid var(--ink-line); color: #DDE5EC; }
+  .btn-ghost:hover { background: rgba(255,255,255,0.05); transform: translateY(-2px); }
+
+  footer {
+    background: var(--ink);
+    color: #6E7F8C;
+    border-top: 1px solid var(--ink-line);
+    font-family: var(--mono);
+    font-size: 12.5px;
+    padding: 26px 0 34px;
+  }
+  footer .wrap { display: flex; flex-wrap: wrap; gap: 10px; justify-content: space-between; }
+
+  /* Reveal animation */
+  .reveal { opacity: 0; transform: translateY(18px); transition: opacity .7s ease, transform .7s ease; }
+  .reveal.in { opacity: 1; transform: none; }
+
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    .reveal { opacity: 1; transform: none; transition: none; }
+    .status-pill .led { animation: none; }
+  }
+
+  /* Responsive */
+  @media (max-width: 860px) {
+    .cards { grid-template-columns: 1fr; }
+    .engage { grid-template-columns: 1fr; }
+    .mrow { grid-template-columns: 1fr; gap: 8px; }
+    .matrix { padding: 8px 18px 18px; }
+    .matrix-head { padding: 14px 18px; }
+  }
+  @media (max-width: 560px) {
+    body { font-size: 16px; }
+    .wrap { padding: 0 18px; }
+    section { padding: 60px 0; }
+    .console { flex-wrap: wrap; gap: 10px; }
+    .status-pill { margin-left: 0; }
+    .hero-body { padding: 52px 0 60px; }
+    .timeline::before { left: 70px; }
+    .tl { grid-template-columns: 70px 1fr; gap: 22px; }
+    .tl .txt::before { left: -26px; }
+  }
+</style>
+</head>
+<body>
+
+  <!-- HERO -->
+  <header class="hero">
+    <div class="wrap">
+      <div class="console">
+        <span class="dots"><i></i><i></i><i></i></span>
+        <span class="path">cv://ludovic-dodin — direction des systèmes d'information</span>
+        <span class="status-pill"><span class="led"></span>Ouvert aux opportunités</span>
+      </div>
+
+      <div class="hero-body">
+        <p class="hero-role reveal">Directeur des Systèmes d'Information</p>
+        <h1 class="hero-name reveal">Ludovic&nbsp;Dodin</h1>
+        <p class="hero-thesis reveal">
+          Vingt années à bâtir, sécuriser et gouverner un système d'information —
+          de l'infrastructure jusqu'au <b>Comité de direction</b>. Cybersécurité,
+          conformité réglementaire et intégration maîtrisée de l'IA.
+        </p>
+
+        <div class="tokens reveal">
+          <span class="token"><b>SMSI</b> · ISO 27001 depuis 2018</span>
+          <span class="token"><b>RGPD</b> · Responsable DPO</span>
+          <span class="token"><b>20+</b> ans en direction du SI</span>
+          <span class="token"><b>Membre</b> du Comité de direction</span>
+          <span class="token"><b>IA</b> · Gouvernance &amp; développement assisté</span>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- PROFIL -->
+  <section class="profil">
+    <div class="wrap">
+      <p class="eyebrow reveal">01 — Profil</p>
+      <h2 class="section-title reveal">Une légitimité construite sur le terrain</h2>
+      <p class="reveal">
+        Directeur des Systèmes d'Information depuis plus de vingt ans, j'ai bâti ma
+        légitimité au sein d'une même organisation. Recruté comme responsable
+        informatique, puis responsable qualité, j'ai progressivement structuré une
+        équipe IT, pris la direction du SI, puis intégré le <span class="accent">Comité de
+        direction</span>. Mon expertise s'est forgée sur le terrain, en matière de
+        cybersécurité, de conformité, de transformation des processus métiers et
+        d'intégration de l'intelligence artificielle. Pragmatique et orienté résultats,
+        je recherche aujourd'hui un projet stimulant où continuer à créer de la valeur
+        et relever de nouveaux défis technologiques.
+      </p>
+    </div>
+  </section>
+
+  <!-- EXPERTISES -->
+  <section style="background:#E6EAE8;">
+    <div class="wrap">
+      <p class="eyebrow reveal">02 — Expertises clés</p>
+      <h2 class="section-title reveal">Trois domaines de valeur</h2>
+      <div class="cards">
+        <article class="card reveal">
+          <span class="idx">GRC</span>
+          <h3>Gouvernance, risques &amp; cybersécurité</h3>
+          <ul>
+            <li>Responsable du SMSI (ISO 27001) depuis 2018 : analyse de risques, conformité et amélioration continue.</li>
+            <li>Pilotage des audits de certification et défense du SI lors des due diligences clients.</li>
+            <li>Protection des données : fonction de DPO et mise en conformité RGPD.</li>
+          </ul>
+        </article>
+
+        <article class="card reveal">
+          <span class="idx">IA</span>
+          <h3>Développement sécurisé &amp; IA générative</h3>
+          <ul>
+            <li>Intégration de Claude AI dans les processus de développement.</li>
+            <li>Revue de code, remédiation de failles de sécurité et optimisation du développement.</li>
+            <li>Cadrage de la gouvernance de l'IA au sein de l'organisation.</li>
+          </ul>
+          <span class="gain">≈ 70 % de gains de productivité</span>
+        </article>
+
+        <article class="card reveal">
+          <span class="idx">INFRA</span>
+          <h3>Infrastructure, cloud &amp; continuité</h3>
+          <ul>
+            <li>Infrastructures hyperconvergées, réseaux, téléphonie omnicanale (VOIP, SIP, SVI, CTI).</li>
+            <li>Sauvegarde et plan de reprise d'activité, migration cloud (M365), gestion des identités et MFA.</li>
+            <li>Dématérialisation certifiée (NF 544), LAD / RAD / OCR et automatisation des processus (RPA).</li>
+          </ul>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- DOMAINES DE COMPETENCES -->
+  <section>
+    <div class="wrap">
+      <p class="eyebrow reveal">03 — Domaines de compétences</p>
+      <h2 class="section-title reveal">Le référentiel technique</h2>
+      <div class="matrix-wrap reveal">
+        <div class="matrix-head">
+          <span class="dots"><i></i><i></i><i></i></span>
+          <span>competences.matrix</span>
+        </div>
+        <div class="matrix">
+          <div class="mrow">
+            <div class="key">intelligence_artificielle</div>
+            <div class="val">
+              <span class="chip">Claude AI</span>
+              <span class="chip">Développement assisté par IA</span>
+              <span class="chip">Gouvernance IA</span>
+            </div>
+          </div>
+          <div class="mrow">
+            <div class="key">cybersécurité</div>
+            <div class="val">
+              <span class="chip">ISO 27001 / SMSI</span>
+              <span class="chip">RGPD / DPO</span>
+              <span class="chip">PCI-DSS</span>
+              <span class="chip">Ethical Hacking</span>
+              <span class="chip">Analyse de risques</span>
+            </div>
+          </div>
+          <div class="mrow">
+            <div class="key">dématérialisation</div>
+            <div class="val">
+              <span class="chip">NF 544</span>
+              <span class="chip">NF Z42-026</span>
+              <span class="chip">NF Z42-013</span>
+              <span class="chip">Archivage électronique</span>
+              <span class="chip">Copie fiable</span>
+              <span class="chip">LAD / RAD / OCR / ICR / IWR</span>
+            </div>
+          </div>
+          <div class="mrow">
+            <div class="key">centre_de_contacts</div>
+            <div class="val">
+              <span class="chip">VOIP</span>
+              <span class="chip">SIP</span>
+              <span class="chip">SVI</span>
+              <span class="chip">CTI</span>
+              <span class="chip">Omnicanal (mail, SMS, fax)</span>
+              <span class="chip">Kiamo</span>
+            </div>
+          </div>
+          <div class="mrow">
+            <div class="key">infrastructure</div>
+            <div class="val">
+              <span class="chip">Serveurs</span>
+              <span class="chip">Réseaux</span>
+              <span class="chip">Hyperconvergé</span>
+              <span class="chip">Appels d'offres</span>
+              <span class="chip">POC</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PARCOURS -->
+  <section class="tight" style="background:#E6EAE8;">
+    <div class="wrap">
+      <p class="eyebrow reveal">04 — Parcours de formation</p>
+      <h2 class="section-title reveal">Une montée en compétence continue</h2>
+      <ul class="timeline reveal">
+        <li class="tl"><div class="yr">2026</div><div class="txt"><strong>Prompt Engineering pour le développement sécurisé</strong><br><span>Claude AI</span></div></li>
+        <li class="tl"><div class="yr">2019</div><div class="txt"><strong>Préparation à la certification NF 544</strong></div></li>
+        <li class="tl"><div class="yr">2018</div><div class="txt"><strong>Normes NF Z42-026 et NF Z42-013</strong><br><span>Archivage électronique</span></div></li>
+        <li class="tl"><div class="yr">2017</div><div class="txt"><strong>GDPR — impact sur l'organisation et plan d'actions</strong></div></li>
+        <li class="tl"><div class="yr">2016</div><div class="txt"><strong>Ethical Hacking</strong></div></li>
+        <li class="tl"><div class="yr">2015</div><div class="txt"><strong>Sécurité ISO 27001 / PCI-DSS</strong></div></li>
+        <li class="tl"><div class="yr">1999</div><div class="txt"><strong>DEUST BC2E — Informatique et Communication</strong><br><span>USTL Lille 2</span></div></li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ENGAGEMENTS -->
+  <section>
+    <div class="wrap">
+      <p class="eyebrow reveal">05 — Engagements associatifs</p>
+      <h2 class="section-title reveal">Un ancrage dans l'écosystème régional</h2>
+      <div class="engage">
+        <div class="eng reveal">
+          <h4>CLUSIR Nord de France</h4>
+          <p>Membre du club des responsables de la sécurité des systèmes d'information et experts en sécurité de la région.</p>
+        </div>
+        <div class="eng reveal">
+          <h4>La Cité de l'IA</h4>
+          <p>Membre d'un collectif d'entreprises accélérant la compréhension, l'usage et le développement de l'IA dans les Hauts-de-France.</p>
+        </div>
+        <div class="eng reveal">
+          <h4>eFutura</h4>
+          <p>Membre de l'association professionnelle des acteurs du numérique et de la donnée.</p>
+        </div>
+        <div class="eng reveal">
+          <h4>Association Toi Demain</h4>
+          <p>Intervention bénévole.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section class="contact">
+    <div class="wrap">
+      <p class="eyebrow reveal">06 — Objectif professionnel</p>
+      <h2 class="section-title reveal">Prêt pour un nouveau projet</h2>
+      <p class="reveal">
+        Je recherche un projet où mon expertise — cybersécurité, conformité, management
+        de transition et gouvernance — pourra s'exprimer pleinement, au sein d'une
+        organisation qui investit dans son avenir et dans ses collaborateurs.
+      </p>
+      <div class="btn-row reveal">
+        <a class="btn btn-primary" href="https://www.linkedin.com/in/ludovic-dodin-2858a5167/" target="_blank" rel="noopener">Me contacter sur LinkedIn</a>
+        <!-- Option courriel : renseignez une adresse professionnelle dédiée avant de l'activer.
+        <a class="btn btn-ghost" href="mailto:VOTRE-ADRESSE-PRO@exemple.fr">Envoyer un courriel</a>
+        -->
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="wrap">
+      <span style="display:inline-flex;align-items:center;gap:11px;">
+        <svg width="26" height="26" viewBox="0 0 100 100" aria-hidden="true" style="flex:none;">
+          <path d="M55.56,10.4 A40,40 0 1 1 44.44,10.4" fill="none" stroke="#B98A34" stroke-width="4" stroke-linecap="round" />
+          <g transform="translate(-2,0)" fill="none" stroke="#B98A34" stroke-width="6" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M36,33 L36,67 L49,67" />
+            <path d="M55,33 L55,67 M55,33 C74,33 74,67 55,67" />
+          </g>
+        </svg>
+        © 2026 — Ludovic Dodin · CV augmenté
+      </span>
+      <span>ISO 27001 · RGPD · Gouvernance IA</span>
+    </div>
+  </footer>
+
+  <script>
+    (function () {
+      var reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      var els = document.querySelectorAll(".reveal");
+      if (reduce || !("IntersectionObserver" in window)) {
+        els.forEach(function (e) { e.classList.add("in"); });
+        return;
+      }
+      var io = new IntersectionObserver(function (entries) {
+        entries.forEach(function (en) {
+          if (en.isIntersecting) { en.target.classList.add("in"); io.unobserve(en.target); }
+        });
+      }, { threshold: 0.12 });
+      els.forEach(function (e) { io.observe(e); });
+    })();
+  </script>
+
+  <!-- ============ ASSISTANT IA ============ -->
+  <style>
+    .ai-fab {
+      position: fixed; right: 22px; bottom: 22px; z-index: 60;
+      display: inline-flex; align-items: center; gap: 10px;
+      background: var(--brass); color: #14202B;
+      font-family: var(--display); font-weight: 600; font-size: 15px;
+      border: none; border-radius: 40px; padding: 14px 20px;
+      box-shadow: 0 10px 30px rgba(12,24,38,0.28); cursor: pointer;
+      transition: transform .18s ease, background .18s ease;
+    }
+    .ai-fab:hover { background: #C99A44; transform: translateY(-2px); }
+    .ai-fab .led { width: 9px; height: 9px; border-radius: 50%; background: #14202B; }
+
+    .ai-panel {
+      position: fixed; right: 22px; bottom: 22px; z-index: 61;
+      width: min(400px, calc(100vw - 32px));
+      height: min(600px, calc(100vh - 44px));
+      background: var(--ink); color: #E8EDF1;
+      border-radius: 12px; overflow: hidden;
+      box-shadow: 0 24px 60px rgba(12,24,38,0.4);
+      display: none; flex-direction: column;
+    }
+    .ai-panel.open { display: flex; }
+    .ai-top {
+      display: flex; align-items: center; gap: 12px;
+      padding: 16px 18px; border-bottom: 1px solid var(--ink-line);
+      font-family: var(--mono); font-size: 13px; color: #B7C4CF;
+    }
+    .ai-top .dots { display: inline-flex; gap: 6px; }
+    .ai-top .dots i { width: 9px; height: 9px; border-radius: 50%; background: #2C4054; }
+    .ai-top .dots i:first-child { background: #C6913E; }
+    .ai-close { margin-left: auto; background: none; border: none; color: #8FA2B2;
+      font-size: 20px; line-height: 1; cursor: pointer; padding: 0 4px; }
+    .ai-close:hover { color: #E8EDF1; }
+
+    .ai-log { flex: 1; overflow-y: auto; padding: 18px; display: flex;
+      flex-direction: column; gap: 12px; }
+    .ai-msg { max-width: 86%; padding: 11px 14px; border-radius: 10px;
+      font-size: 15px; line-height: 1.5; white-space: pre-wrap; }
+    .ai-msg.bot { background: rgba(255,255,255,0.06); align-self: flex-start;
+      border: 1px solid var(--ink-line); }
+    .ai-msg.me { background: var(--brass); color: #14202B; align-self: flex-end; }
+    .ai-msg.typing { color: #8FA2B2; font-style: italic; }
+
+    .ai-suggest { display: flex; flex-wrap: wrap; gap: 8px; padding: 0 18px 4px; }
+    .ai-suggest button {
+      font-family: var(--mono); font-size: 12px; color: #CFE7DB;
+      background: rgba(255,255,255,0.04); border: 1px solid var(--ink-line);
+      border-radius: 20px; padding: 7px 12px; cursor: pointer;
+    }
+    .ai-suggest button:hover { background: rgba(255,255,255,0.09); }
+
+    .ai-form { display: flex; gap: 8px; padding: 14px 16px; border-top: 1px solid var(--ink-line); }
+    .ai-form input {
+      flex: 1; background: rgba(255,255,255,0.05); border: 1px solid var(--ink-line);
+      border-radius: 8px; color: #E8EDF1; font-family: var(--body); font-size: 15px;
+      padding: 11px 13px; outline: none;
+    }
+    .ai-form input:focus { border-color: var(--brass); }
+    .ai-form button {
+      background: var(--brass); color: #14202B; border: none; border-radius: 8px;
+      font-family: var(--display); font-weight: 600; padding: 0 16px; cursor: pointer;
+    }
+    .ai-form button:disabled { opacity: 0.5; cursor: default; }
+    .ai-note { padding: 0 18px 14px; font-family: var(--mono); font-size: 10.5px;
+      color: #6E7F8C; line-height: 1.4; }
+
+    @media (prefers-reduced-motion: reduce) {
+      .ai-fab { transition: none; }
+    }
+  </style>
+
+  <button class="ai-fab" id="aiFab" aria-label="Ouvrir l'assistant IA">
+    <span class="led"></span> Interroger mon CV
+  </button>
+
+  <section class="ai-panel" id="aiPanel" aria-label="Assistant IA du CV">
+    <div class="ai-top">
+      <span class="dots"><i></i><i></i><i></i></span>
+      <span>assistant.cv — propulsé par Gemini</span>
+      <button class="ai-close" id="aiClose" aria-label="Fermer">×</button>
+    </div>
+    <div class="ai-log" id="aiLog">
+      <div class="ai-msg bot">Bonjour. Je peux répondre à vos questions sur le parcours, les expertises et les certifications de Ludovic Dodin. Que souhaitez-vous savoir ?</div>
+    </div>
+    <div class="ai-suggest" id="aiSuggest">
+      <button type="button">Quelle est son expérience en cybersécurité ?</button>
+      <button type="button">Comment utilise-t-il l'IA ?</button>
+      <button type="button">Quelles certifications maîtrise-t-il ?</button>
+    </div>
+    <form class="ai-form" id="aiForm">
+      <input id="aiInput" type="text" placeholder="Votre question…" autocomplete="off" maxlength="500" />
+      <button type="submit" id="aiSend">Envoyer</button>
+    </form>
+    <p class="ai-note">Les questions sont traitées par l'API Google Gemini. Merci de ne pas y saisir de données personnelles.</p>
+  </section>
+
+  <script>
+    (function () {
+      // ⚠️ À renseigner après déploiement du Worker (voir README).
+      var WORKER_URL = "https://cv-ia-proxy.VOTRE-SOUS-DOMAINE.workers.dev";
+
+      var fab = document.getElementById("aiFab");
+      var panel = document.getElementById("aiPanel");
+      var close = document.getElementById("aiClose");
+      var log = document.getElementById("aiLog");
+      var form = document.getElementById("aiForm");
+      var input = document.getElementById("aiInput");
+      var send = document.getElementById("aiSend");
+      var suggest = document.getElementById("aiSuggest");
+      var history = [];
+
+      function open() { panel.classList.add("open"); fab.style.display = "none"; input.focus(); }
+      function shut() { panel.classList.remove("open"); fab.style.display = "inline-flex"; }
+      fab.addEventListener("click", open);
+      close.addEventListener("click", shut);
+
+      function bubble(text, cls) {
+        var d = document.createElement("div");
+        d.className = "ai-msg " + cls;
+        d.textContent = text;
+        log.appendChild(d);
+        log.scrollTop = log.scrollHeight;
+        return d;
+      }
+
+      async function ask(question) {
+        if (!question) return;
+        suggest.style.display = "none";
+        bubble(question, "me");
+        history.push({ role: "user", content: question });
+        input.value = "";
+        send.disabled = true;
+        var typing = bubble("Rédaction en cours…", "bot typing");
+
+        try {
+          var res = await fetch(WORKER_URL, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ messages: history }),
+          });
+          var data = await res.json();
+          typing.remove();
+          var reply = (data && data.reply) ? data.reply : "Le service est momentanément indisponible.";
+          bubble(reply, "bot");
+          history.push({ role: "assistant", content: reply });
+        } catch (e) {
+          typing.remove();
+          bubble("Le service est momentanément indisponible. Vous pouvez me contacter via LinkedIn.", "bot");
+        } finally {
+          send.disabled = false;
+          input.focus();
+        }
+      }
+
+      form.addEventListener("submit", function (e) {
+        e.preventDefault();
+        ask(input.value.trim());
+      });
+      suggest.addEventListener("click", function (e) {
+        if (e.target.tagName === "BUTTON") ask(e.target.textContent);
+      });
+    })();
+  </script>
+
+</body>
+</html>
