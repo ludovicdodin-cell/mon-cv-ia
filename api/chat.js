@@ -2,6 +2,8 @@
 // La clé Gemini n'est JAMAIS dans la page : elle est lue ici, côté serveur,
 // depuis la variable d'environnement GEMINI_API_KEY (tableau de bord Vercel).
 
+// Alias « flash-latest » : pointe toujours vers le modèle Flash courant,
+// ce qui évite les erreurs 404 lors des futures mises à jour de Google.
 const GEMINI_MODEL = "gemini-flash-latest";
 
 const SYSTEM_PROMPT = `
@@ -52,8 +54,7 @@ module.exports = async function handler(req, res) {
   try {
     if (!process.env.GEMINI_API_KEY) {
       return res.status(500).json({
-        error: "Clé absente",
-        detail: "La variable GEMINI_API_KEY n'est pas configurée sur Vercel.",
+        error: "L'assistant n'est pas encore configuré.",
       });
     }
 
@@ -77,24 +78,29 @@ module.exports = async function handler(req, res) {
       generationConfig: { temperature: 0.4, maxOutputTokens: 700 },
     };
 
-    const upstream = await fetch(
-      `https://generativelanguage.googleapis.com/v1beta/models/${GEMINI_MODEL}:generateContent`,
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          "x-goog-api-key": process.env.GEMINI_API_KEY,
-        },
-        body: JSON.stringify(payload),
-      }
-    );
+    const endpoint =
+      `https://generativelanguage.googleapis.com/v1beta/models/${GEMINI_MODEL}:generateContent`;
+    const options = {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "x-goog-api-key": process.env.GEMINI_API_KEY,
+      },
+      body: JSON.stringify(payload),
+    };
+
+    // Reprise automatique en cas de pic de demande (HTTP 503) : jusqu'à 3 essais.
+    let upstream;
+    for (let essai = 1; essai <= 3; essai++) {
+      upstream = await fetch(endpoint, options);
+      if (upstream.status !== 503) break;
+      if (essai < 3) await new Promise((r) => setTimeout(r, 800 * essai));
+    }
 
     if (!upstream.ok) {
-      const errText = await upstream.text().catch(() => "");
-      console.error("Erreur Gemini", upstream.status, errText);
+      console.error("Erreur Gemini", upstream.status);
       return res.status(502).json({
-        error: "Erreur API Gemini",
-        detail: "HTTP " + upstream.status + " " + errText.slice(0, 180),
+        error: "L'assistant est momentanément indisponible. Merci de réessayer dans un instant.",
       });
     }
 
@@ -110,8 +116,7 @@ module.exports = async function handler(req, res) {
   } catch (e) {
     console.error("Exception fonction", e);
     return res.status(502).json({
-      error: "Exception serveur",
-      detail: String((e && e.message) || e).slice(0, 180),
+      error: "L'assistant est momentanément indisponible. Merci de réessayer dans un instant.",
     });
   }
 };

@@ -818,15 +818,15 @@
           if (data && data.reply) {
             reply = data.reply;
           } else if (data && data.error) {
-            reply = "[Diagnostic] " + data.error + (data.detail ? " — " + data.detail : "");
+            reply = data.error;
           } else {
-            reply = "Le service est momentanément indisponible.";
+            reply = "L'assistant est momentanément indisponible. Merci de réessayer dans un instant.";
           }
           bubble(reply, "bot");
           history.push({ role: "assistant", content: reply });
         } catch (e) {
           typing.remove();
-          bubble("[Diagnostic] Appel impossible : " + ((e && e.message) ? e.message : "réponse illisible"), "bot");
+          bubble("L'assistant est momentanément indisponible. Vous pouvez aussi me contacter via LinkedIn.", "bot");
         } finally {
           send.disabled = false;
           input.focus();
