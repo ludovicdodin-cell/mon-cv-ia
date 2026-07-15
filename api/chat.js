@@ -2,7 +2,7 @@
 // La clé Gemini n'est JAMAIS dans la page : elle est lue ici, côté serveur,
 // depuis la variable d'environnement GEMINI_API_KEY (tableau de bord Vercel).
 
-const GEMINI_MODEL = "gemini-2.5-flash";
+const GEMINI_MODEL = "gemini-flash-latest";
 
 const SYSTEM_PROMPT = `
 Tu es l'assistant conversationnel du CV augmenté de Ludovic Dodin,
