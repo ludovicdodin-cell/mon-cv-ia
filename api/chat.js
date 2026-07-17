@@ -2,9 +2,10 @@
 // La clé Gemini n'est JAMAIS dans la page : elle est lue ici, côté serveur,
 // depuis la variable d'environnement GEMINI_API_KEY (tableau de bord Vercel).
 
-// Alias « flash-latest » : pointe toujours vers le modèle Flash courant,
-// ce qui évite les erreurs 404 lors des futures mises à jour de Google.
-const GEMINI_MODEL = "gemini-flash-latest";
+// Modèle stable et fixe : plus fiable et assorti de limites de requêtes plus
+// généreuses que les alias « latest », qui pointent vers des modèles
+// expérimentaux aux quotas plus restrictifs.
+const GEMINI_MODEL = "gemini-2.5-flash";
 
 const SYSTEM_PROMPT = `
 Tu es l'assistant conversationnel du CV augmenté de Ludovic Dodin,
@@ -100,19 +101,37 @@ module.exports = async function handler(req, res) {
       body: JSON.stringify(payload),
     };
 
-    // Reprise automatique en cas de pic de demande (HTTP 503) : jusqu'à 3 essais.
+    // Codes d'erreur temporaires justifiant une nouvelle tentative :
+    // 429 (trop de requêtes), 500 (erreur interne), 502/503/504 (indisponibilité).
+    const CODES_TEMPORAIRES = [429, 500, 502, 503, 504];
+
+    // Reprise automatique en cas d'erreur temporaire : jusqu'à 4 essais,
+    // avec un délai croissant entre chaque tentative.
     let upstream;
-    for (let essai = 1; essai <= 3; essai++) {
+    for (let essai = 1; essai <= 4; essai++) {
       upstream = await fetch(endpoint, options);
-      if (upstream.status !== 503) break;
-      if (essai < 3) await new Promise((r) => setTimeout(r, 800 * essai));
+      if (!CODES_TEMPORAIRES.includes(upstream.status)) break;
+      if (essai < 4) await new Promise((r) => setTimeout(r, 700 * essai));
     }
 
     if (!upstream.ok) {
-      console.error("Erreur Gemini", upstream.status);
-      return res.status(502).json({
-        error: "L'assistant est momentanément indisponible. Merci de réessayer dans un instant.",
-      });
+      // Journalisation du détail de l'erreur renvoyée par Google, afin de
+      // faciliter le diagnostic (aucun contenu du visiteur n'est enregistré).
+      let detail = "";
+      try {
+        detail = await upstream.text();
+      } catch (_) {
+        detail = "(corps de réponse illisible)";
+      }
+      console.error("Erreur Gemini", upstream.status, detail.slice(0, 500));
+
+      // Message adapté selon le type d'erreur, pour informer le visiteur.
+      const message =
+        upstream.status === 429
+          ? "L'assistant reçoit un grand nombre de demandes actuellement. Merci de réessayer dans quelques instants."
+          : "L'assistant est momentanément indisponible. Merci de réessayer dans un instant.";
+
+      return res.status(502).json({ error: message });
     }
 
     const data = await upstream.json();
