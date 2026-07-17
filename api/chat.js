@@ -2,10 +2,12 @@
 // La clé Gemini n'est JAMAIS dans la page : elle est lue ici, côté serveur,
 // depuis la variable d'environnement GEMINI_API_KEY (tableau de bord Vercel).
 
-// Modèle stable et fixe : plus fiable et assorti de limites de requêtes plus
-// généreuses que les alias « latest », qui pointent vers des modèles
-// expérimentaux aux quotas plus restrictifs.
-const GEMINI_MODEL = "gemini-3.5-flash";
+// Modèles stables et disponibles de manière générale (GA), sans date de retrait
+// annoncée. Le modèle principal est utilisé en priorité ; en cas de surcharge
+// persistante (erreur 503), le code bascule automatiquement vers le modèle de
+// repli, plus léger et moins sollicité. À vérifier périodiquement sur la page
+// des dépréciations de Google.
+const GEMINI_MODELS = ["gemini-3.5-flash", "gemini-3.1-flash-lite"];
 
 const SYSTEM_PROMPT = `
 Tu es l'assistant conversationnel du CV augmenté de Ludovic Dodin,
@@ -54,7 +56,7 @@ module.exports = async function handler(req, res) {
   if (req.method === "GET") {
     return res.status(200).json({
       status: "ok",
-      modele: GEMINI_MODEL,
+      modeles: GEMINI_MODELS,
       cleConfiguree: Boolean(process.env.GEMINI_API_KEY),
     });
   }
@@ -90,8 +92,6 @@ module.exports = async function handler(req, res) {
       generationConfig: { temperature: 0.4, maxOutputTokens: 700 },
     };
 
-    const endpoint =
-      `https://generativelanguage.googleapis.com/v1beta/models/${GEMINI_MODEL}:generateContent`;
     const options = {
       method: "POST",
       headers: {
@@ -105,29 +105,39 @@ module.exports = async function handler(req, res) {
     // 429 (trop de requêtes), 500 (erreur interne), 502/503/504 (indisponibilité).
     const CODES_TEMPORAIRES = [429, 500, 502, 503, 504];
 
-    // Reprise automatique en cas d'erreur temporaire : jusqu'à 4 essais,
-    // avec un délai croissant entre chaque tentative.
+    // On essaie chaque modèle à tour de rôle. Pour chaque modèle, jusqu'à 3
+    // tentatives avec un délai croissant. Si le modèle principal reste
+    // indisponible, on bascule automatiquement vers le modèle de repli.
     let upstream;
-    for (let essai = 1; essai <= 4; essai++) {
-      upstream = await fetch(endpoint, options);
-      if (!CODES_TEMPORAIRES.includes(upstream.status)) break;
-      if (essai < 4) await new Promise((r) => setTimeout(r, 700 * essai));
+    let dernierStatut = 0;
+    let dernierDetail = "";
+
+    for (const modele of GEMINI_MODELS) {
+      const endpoint =
+        `https://generativelanguage.googleapis.com/v1beta/models/${modele}:generateContent`;
+
+      for (let essai = 1; essai <= 3; essai++) {
+        upstream = await fetch(endpoint, options);
+        if (!CODES_TEMPORAIRES.includes(upstream.status)) break;
+        if (essai < 3) await new Promise((r) => setTimeout(r, 600 * essai));
+      }
+
+      if (upstream.ok) break; // Succès : on arrête, ce modèle a répondu.
+
+      // Échec pour ce modèle : on consigne le détail avant de tenter le suivant.
+      try {
+        dernierDetail = await upstream.text();
+      } catch (_) {
+        dernierDetail = "(corps de réponse illisible)";
+      }
+      dernierStatut = upstream.status;
+      console.error("Erreur Gemini", modele, dernierStatut, dernierDetail.slice(0, 500));
     }
 
     if (!upstream.ok) {
-      // Journalisation du détail de l'erreur renvoyée par Google, afin de
-      // faciliter le diagnostic (aucun contenu du visiteur n'est enregistré).
-      let detail = "";
-      try {
-        detail = await upstream.text();
-      } catch (_) {
-        detail = "(corps de réponse illisible)";
-      }
-      console.error("Erreur Gemini", upstream.status, detail.slice(0, 500));
-
-      // Message adapté selon le type d'erreur, pour informer le visiteur.
+      // Tous les modèles ont échoué : message adapté selon le dernier statut.
       const message =
-        upstream.status === 429
+        dernierStatut === 429
           ? "L'assistant reçoit un grand nombre de demandes actuellement. Merci de réessayer dans quelques instants."
           : "L'assistant est momentanément indisponible. Merci de réessayer dans un instant.";
 
