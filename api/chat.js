@@ -5,7 +5,7 @@
 // Modèle stable et fixe : plus fiable et assorti de limites de requêtes plus
 // généreuses que les alias « latest », qui pointent vers des modèles
 // expérimentaux aux quotas plus restrictifs.
-const GEMINI_MODEL = "gemini-2.5-flash";
+const GEMINI_MODEL = "gemini-3.5-flash";
 
 const SYSTEM_PROMPT = `
 Tu es l'assistant conversationnel du CV augmenté de Ludovic Dodin,
